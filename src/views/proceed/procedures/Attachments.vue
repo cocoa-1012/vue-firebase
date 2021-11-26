@@ -1,0 +1,180 @@
+ <template>
+  <div>
+    <!-- 
+    <v-row class="align-items-center search-wrap pt-5">
+      <v-col cols="12" md="12" lg="12" class="align-items-center pt-0">
+        <app-card customClasses="mb-0 py-12">
+          <v-row>
+            <v-col cols="12" md="12" lg="3" class="align-center">
+              <h2 class="mb-0">Search</h2>
+            </v-col>
+            <v-col cols="12" md="12" lg="9" class="pb-0">
+              <div class="d-flex search-field-wrap">
+                <div class="w-75">
+                  <v-text-field class="pt-0 pr-3" label="Search Projects">
+                  </v-text-field>
+                </div>
+                <div>
+                  <v-btn color="primary" class="my-0 ml-0 mr-2" medium
+                    >Search</v-btn
+                  >
+                  <v-btn color="primary m-0" medium @click="openDialog()"
+                    >Add<i class="material-icons">add</i></v-btn
+                  >
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </app-card>
+      </v-col>
+    </v-row>
+    -->
+    <v-row>
+      <app-card
+        colClasses="col-xl-12 col-lg-12 col-md-12 col-12 "
+        customClasses="mb-0 client-wrapper"
+      >
+        <files-details :clientData="fileData"></files-details>
+      </app-card>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <template>
+          <v-dialog v-model="open" max-width="600">
+            <v-card class="pa-6">
+              <v-text-field
+                label="Name"
+                v-model="editName"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="Email"
+                v-model="editEmail"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="Phone Number"
+                v-model="editPhoneNo"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="Location"
+                v-model="editLocation"
+                required
+              ></v-text-field>
+
+              <v-card-actions class="pa-0">
+                <v-spacer></v-spacer>
+                <v-btn color="primary" @click="open = false">Cancel</v-btn>
+                <v-btn color="error" @click="addClient()">Add</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </template>
+      </v-col>
+    </v-row>
+  </div>
+</template>
+
+<script>
+import FilesDetails from "Components/Widgets/FilesDetails";
+//import { fileData } from "Views/crm/data.js";
+
+const fileData = {
+  Clients: [
+    {
+      image: "/static/avatars/user-1.jpg",
+      name: "Jerry Ried",
+      e_mail: "JerryBRied@jourrapide.com",
+      phone_number: "+1 207-589-4752",
+      country: "Liberty",
+      tag: "activities",
+    },
+    {
+      image: "/static/avatars/user-1.jpg",
+      name: "Jerry Ried",
+      e_mail: "JerryBRied@jourrapide.com",
+      phone_number: "+1 207-589-4752",
+      country: "Liberty",
+      tag: "activities",
+    },
+    {
+      image: "/static/avatars/user-4.jpg",
+      name: "Julie Reno",
+      e_mail: "JulieDReno@dayrep.com",
+      phone_number: "+1 956-303-4288",
+      country: "Harlingen",
+      tag: "activities",
+    },
+    {
+      image: "/static/avatars/user-2.jpg",
+      name: "Gustavo Stevenson",
+      e_mail: "GustavoJStevenson@rhyta.com",
+      phone_number: "+1 727-709-5505",
+      country: "Tampa",
+      tag: "activities",
+    },
+    {
+      image: "/static/avatars/user-3.jpg",
+      name: "David Jones",
+      e_mail: "DavidDJones@jourrapide.com",
+      phone_number: "+1 407-343-1604",
+      country: "Kissimmee",
+      tag: "activities",
+    },
+    {
+      image: "/static/avatars/user-3.jpg",
+      name: "John Shrum",
+      e_mail: "JohnLShrum@jourrapide.com ",
+      phone_number: "+1 650-722-2798",
+      country: "San Francisco",
+      tag: "procedure",
+    },
+  ],
+};
+
+export default {
+  components: {
+    FilesDetails,
+  },
+  data() {
+    return {
+      fileData,
+      open: false,
+      editName: "",
+      editEmail: "",
+      editPhoneNo: "",
+      editLocation: "",
+    };
+  },
+  methods: {
+    openDialog() {
+      this.open = true;
+    },
+    close() {
+      this.open = false;
+    },
+    addClient() {
+      this.openDialog();
+      var clientsArr = fileData.Clients;
+
+      var newClient = {
+        image: "/static/avatars/user-1.jpg",
+        name: this.editName,
+        e_mail: this.editEmail,
+        phone_number: this.editPhoneNo,
+        country: this.editLocation,
+        tag: "recently_added",
+      };
+      clientsArr.push(newClient);
+      this.editName = "";
+      this.editEmail = "";
+      this.editPhoneNo = "";
+      this.editLocation = "";
+
+      this.close();
+    },
+  },
+};
+</script>
